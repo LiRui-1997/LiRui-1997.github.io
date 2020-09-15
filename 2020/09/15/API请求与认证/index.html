@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>API请求与认证 | 李瑞的个人博客</title><meta name="description" content="Web API 协议及 HTTP 请求Web API 协议Web API 一般采用 HTTP 作为底层协议，HTTP 请求机制如下：  客户端向服务器发送一个请求 服务端给客户端一个响应，告诉客户端是否可以完成它请求的工作   HTTP 请求包含的内容为了构造有效的请求，客户端需要包含四个部分：  URL（API 调用地址） 请求方式 Header（请求头） Body（请求主体）   API 请求"><meta name="author" content="李瑞"><meta name="copyright" content="李瑞"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lirui-1997.github.io/2020/09/15/API%E8%AF%B7%E6%B1%82%E4%B8%8E%E8%AE%A4%E8%AF%81/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="API请求与认证"><meta property="og:url" content="https://lirui-1997.github.io/2020/09/15/API%E8%AF%B7%E6%B1%82%E4%B8%8E%E8%AE%A4%E8%AF%81/"><meta property="og:site_name" content="李瑞的个人博客"><meta property="og:description" content="Web API 协议及 HTTP 请求Web API 协议Web API 一般采用 HTTP 作为底层协议，HTTP 请求机制如下：  客户端向服务器发送一个请求 服务端给客户端一个响应，告诉客户端是否可以完成它请求的工作   HTTP 请求包含的内容为了构造有效的请求，客户端需要包含四个部分：  URL（API 调用地址） 请求方式 Header（请求头） Body（请求主体）   API 请求"><meta property="og:image" content="https://wx1.sbimg.cn/2020/09/11/9YETo.png"><meta property="article:published_time" content="2020-09-15T01:20:37.000Z"><meta property="article:modified_time" content="2020-09-15T02:26:20.502Z"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime: '',
+  date_suffix: {"one_hour":"刚刚","hours":"小时前","day":"天前"},
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+      const now = new Date()
+      const expiryDay = ttl * 86400000
+      const item = {
+        value: value,
+        expiry: now.getTime() + expiryDay,
+      }
+      localStorage.setItem(key, JSON.stringify(item))
+    },
+  
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-09-15 10:26:20'
+}</script><noscript><style type="text/css">
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+  }
+}
+
+var autoChangeMode = 'false'
+var t = saveToLocal.get('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (saveToLocal.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/StaticFile_Hexo-master/butterfly/css/pool.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/StaticFile_Hexo-master/butterfly/css/iconfont.min.css"><meta name="generator" content="Hexo 5.1.1"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">12</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web-API-%E5%8D%8F%E8%AE%AE%E5%8F%8A-HTTP-%E8%AF%B7%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">Web API 协议及 HTTP 请求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Web-API-%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.1.</span> <span class="toc-text">Web API 协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E8%AF%B7%E6%B1%82%E5%8C%85%E5%90%AB%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-number">1.2.</span> <span class="toc-text">HTTP 请求包含的内容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#API-%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">API 请求方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E8%BF%94%E5%9B%9E%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">状态返回码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%8A%9F%E7%8A%B6%E6%80%81"><span class="toc-number">3.1.</span> <span class="toc-text">成功状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%94%99%E8%AF%AF%E7%A0%81"><span class="toc-number">3.2.</span> <span class="toc-text">服务端错误码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%94%99%E8%AF%AF%E7%A0%81"><span class="toc-number">3.3.</span> <span class="toc-text">客户端错误码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#API-%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">API 数据格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#API-%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E5%8F%8A%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81"><span class="toc-number">5.</span> <span class="toc-text">API 身份认证及签名认证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#API-%E7%AE%80%E5%8D%95%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%EF%BC%88APPCODE-%E6%96%B9%E5%BC%8F%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">API 简单身份认证（APPCODE 方式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%EF%BC%88AppKey-amp-AppSecret%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">API 签名认证（AppKey &amp; AppSecret）</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://wx1.sbimg.cn/2020/09/11/9YETo.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">李瑞的个人博客</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">API请求与认证</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-09-15T01:20:37.000Z" title="发表于 2020-09-15 09:20:37">2020-09-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-09-15T02:26:20.502Z" title="更新于 2020-09-15 10:26:20">2020-09-15</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="Web-API-协议及-HTTP-请求"><a href="#Web-API-协议及-HTTP-请求" class="headerlink" title="Web API 协议及 HTTP 请求"></a>Web API 协议及 HTTP 请求</h2><h3 id="Web-API-协议"><a href="#Web-API-协议" class="headerlink" title="Web API 协议"></a>Web API 协议</h3><p>Web API 一般采用 HTTP 作为底层协议，HTTP 请求机制如下：</p>
+<ul>
+<li>客户端向服务器发送一个请求</li>
+<li>服务端给客户端一个响应，告诉客户端是否可以完成它请求的工作</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/API%E8%AF%B7%E6%B1%82%E4%B8%8E%E8%AE%A4%E8%AF%81/image-20200915092401128.png" alt="image-20200915092401128.png"></p>
+<h3 id="HTTP-请求包含的内容"><a href="#HTTP-请求包含的内容" class="headerlink" title="HTTP 请求包含的内容"></a>HTTP 请求包含的内容</h3><p>为了构造有效的请求，客户端需要包含四个部分：</p>
+<ul>
+<li>URL（API 调用地址）</li>
+<li>请求方式</li>
+<li>Header（请求头）</li>
+<li>Body（请求主体）</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/API%E8%AF%B7%E6%B1%82%E4%B8%8E%E8%AE%A4%E8%AF%81/image-20200915093412019.png" alt="image-20200915093412019.png"></p>
+<h2 id="API-请求方式"><a href="#API-请求方式" class="headerlink" title="API 请求方式"></a>API 请求方式</h2><p>请求方式告诉服务器客户端希望它采取什么动作。常见的请求方式有四种：</p>
+<ul>
+<li>GET：请求服务器获取一个资源</li>
+<li>POST：请求服务器创建一个新的资源</li>
+<li>PUT：请求服务器编辑或更新一个已存在的资源</li>
+<li>DELETE：请求服务器删除一个资源</li>
+</ul>
+<p>请求头（Headers）：提供了请求的元信息，是一个简单的项目列表，其中有客户端发送请求的时间和请求主体大小、身份认证等信息。</p>
+<p>请求体（Body）：包含了客户端希望发送给服务器的数据。</p>
+<h2 id="状态返回码"><a href="#状态返回码" class="headerlink" title="状态返回码"></a>状态返回码</h2><h3 id="成功状态"><a href="#成功状态" class="headerlink" title="成功状态"></a>成功状态</h3><p>当成功调用 API 后，除了返回数据外，还会包含一个状态码，处理成功返回2xx：</p>
+<table>
+<thead>
+<tr>
+<th align="center">HTTP 状态码</th>
+<th align="center">语义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">200 OK - [GET]</td>
+<td align="center">服务器成功返回用户请求的数据</td>
+</tr>
+<tr>
+<td align="center">201 CREATED - [POST/PUT/PATCH]</td>
+<td align="center">用户新建或修改数据成功</td>
+</tr>
+<tr>
+<td align="center">202 Accepted - [*]</td>
+<td align="center">表示一个请求已经进入后台排队（）异步任务</td>
+</tr>
+<tr>
+<td align="center">204 NO CONTENT - [DELETE]</td>
+<td align="center">用户删除数据成功</td>
+</tr>
+</tbody></table>
+<h3 id="服务端错误码"><a href="#服务端错误码" class="headerlink" title="服务端错误码"></a>服务端错误码</h3><p>API 未调用成功，则返回错误码。服务端错误码是5xx，表示服务不可用（此时一般建议重试或联系商品页面的 API 服务商）。</p>
+<table>
+<thead>
+<tr>
+<th align="center">错误代码</th>
+<th align="center">HTTP 状态码</th>
+<th align="center">语义</th>
+<th align="center">解决方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Internet Error</td>
+<td align="center">500</td>
+<td align="center">API 网关内部错误</td>
+<td align="center">建议重试。</td>
+</tr>
+<tr>
+<td align="center">Failed To Invoke Backend Service</td>
+<td align="center">500</td>
+<td align="center">底层服务错误</td>
+<td align="center">API 提供者底层服务错误，建议重试，如果重试多次仍不可用，可联系 API 服务商解决。</td>
+</tr>
+<tr>
+<td align="center">Service Unavailable</td>
+<td align="center">503</td>
+<td align="center">服务不可用</td>
+<td align="center">建议稍后重试。</td>
+</tr>
+<tr>
+<td align="center">Async Service</td>
+<td align="center">504</td>
+<td align="center">后端服务超时</td>
+<td align="center">建议稍后重试。</td>
+</tr>
+</tbody></table>
+<h3 id="客户端错误码"><a href="#客户端错误码" class="headerlink" title="客户端错误码"></a>客户端错误码</h3><p>客户端错误码为4xx，表示业务报错。此时一般为参数错误、签名错误、请求方式有误或被流控限制等业务类错误，建议详细查看错误码，针对性解决问题。</p>
+<p>参考：错误代码表 <a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/43906.html">https://help.aliyun.com/document_detail/43906.html</a></p>
+<p><em>注意：有些 API 自定义了错误码，具体请查看该 API 文档中的描述。</em></p>
+<h2 id="API-数据格式"><a href="#API-数据格式" class="headerlink" title="API 数据格式"></a>API 数据格式</h2><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/API%E8%AF%B7%E6%B1%82%E4%B8%8E%E8%AE%A4%E8%AF%81/image-20200915095925547.png" alt="image-20200915095925547.png"></p>
+<p>目前最新的 API 大多数使用 JSON 数据格式。JSON（JavaScript Object Notation）是一种轻量级的数据交换格式，采用完全独立于语言的文本格式，易于人阅读和编写，同时也易于机器解析和生成，是一种理想的数据交换语言。</p>
+<p><strong>JSON</strong> 数据格式表示方法</p>
+<ol>
+<li>表示对象</li>
+</ol>
+<p>JSON 最常用的格式是对象的键值对。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;name&quot;</span>:<span class="string">&quot;黑龙江&quot;</span>，<span class="string">&quot;city&quot;</span>:<span class="string">&quot;哈尔滨&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>表示数组</li>
+</ol>
+<p>和普通的 JS 数组一样，JSON 表示数组的方式是使用方括号 []。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;name&quot;</span>:<span class="string">&quot;中国&quot;</span></span><br><span class="line">	<span class="string">&quot;province&quot;</span>:[&#123;</span><br><span class="line">		<span class="attr">&quot;name&quot;</span>:<span class="string">&quot;黑龙江&quot;</span></span><br><span class="line">		<span class="string">&quot;city&quot;</span>:<span class="string">&quot;哈尔滨&quot;</span></span><br><span class="line">	&#125;,&#123;</span><br><span class="line">		<span class="attr">&quot;name&quot;</span>:<span class="string">&quot;广东&quot;</span></span><br><span class="line">		<span class="string">&quot;city&quot;</span>:<span class="string">&quot;广州&quot;</span></span><br><span class="line">	&#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="API-身份认证及签名认证"><a href="#API-身份认证及签名认证" class="headerlink" title="API 身份认证及签名认证"></a>API 身份认证及签名认证</h2><h3 id="API-简单身份认证（APPCODE-方式）"><a href="#API-简单身份认证（APPCODE-方式）" class="headerlink" title="API 简单身份认证（APPCODE 方式）"></a>API 简单身份认证（APPCODE 方式）</h3><p>可以通过 APPCODE 的方式，实现到被调用接口的身份认证，获取访问相关 API 的调用权限。使用方法：</p>
+<ul>
+<li>请求 Header 中添加的 Authorization 字段；</li>
+<li>配置 Authorization 字段的值为 “APPCODE + 半角空格 + APPCODE值”。</li>
+</ul>
+<p>格式：</p>
+<ul>
+<li>Authorization:APPCODE AppCode值</li>
+</ul>
+<p>示例：</p>
+<ul>
+<li>Authorization:APPCODE 3F2504E04F8911D39A0C0305E82C3301</li>
+</ul>
+<h3 id="API-签名认证（AppKey-amp-AppSecret）"><a href="#API-签名认证（AppKey-amp-AppSecret）" class="headerlink" title="API 签名认证（AppKey &amp; AppSecret）"></a>API 签名认证（AppKey &amp; AppSecret）</h3><p>AppKey 和 AppSecret 相当于当前账户的另一套账号和密码机制。在云市场购买API之后，就可以在控制台找到对应的 AppKey 和 AppSecret 。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/API%E8%AF%B7%E6%B1%82%E4%B8%8E%E8%AE%A4%E8%AF%81/image-20200915102508920.png" alt="image-20200915102508920.png)">)</p>
+<p>具体签名认证方法请参见<strong>请求头部字段</strong>以及<strong>请求签名说明文档</strong>。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lirui-1997.github.io/">李瑞</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lirui-1997.github.io/2020/09/15/API%E8%AF%B7%E6%B1%82%E4%B8%8E%E8%AE%A4%E8%AF%81/">https://lirui-1997.github.io/2020/09/15/API%E8%AF%B7%E6%B1%82%E4%B8%8E%E8%AE%A4%E8%AF%81/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用  <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 </a> 许可协议。转载请注明出处！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://wx1.sbimg.cn/2020/09/11/9YETo.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2020/09/15/API%E7%AE%80%E4%BB%8B/"><img class="next-cover" src="https://wx1.sbimg.cn/2020/09/11/9YETo.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">阿里云课程之API简介</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By 李瑞</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/StaticFile_Hexo-master/butterfly/js/pool.min.js"></script><canvas class="fireworks"></canvas><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="/js/third-party/fireworks.js"></script></div></body></html>
