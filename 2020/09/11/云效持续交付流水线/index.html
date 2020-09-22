@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>阿里云DevOps之云效持续交付流水线 | 李瑞的个人博客</title><meta name="description" content="云效流水线简介云效简介 云效流水线 云效部署能力概述 云效流线型实操创建一条流水线 选择模板 指定代码仓库 新建代码库 开通云效代码托管功能  创建流水线 流水线状态页 编辑流水线  设置部署环境 关联ECS到部署环境 运行流水线 部署成功  整体课程总结阿里云–云效，企业级一站式DevOps平台，源于阿里巴巴先进的研发理念和工程实践，致力于成为数字企业的研发效能引擎！云效提供从“需求–&gt;开"><meta name="keywords" content="DevOps,CI/CD,云效"><meta name="author" content="李瑞"><meta name="copyright" content="李瑞"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://lirui-1997.github.io/2020/09/11/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="阿里云DevOps之云效持续交付流水线"><meta property="og:url" content="https://lirui-1997.github.io/2020/09/11/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/"><meta property="og:site_name" content="李瑞的个人博客"><meta property="og:description" content="云效流水线简介云效简介 云效流水线 云效部署能力概述 云效流线型实操创建一条流水线 选择模板 指定代码仓库 新建代码库 开通云效代码托管功能  创建流水线 流水线状态页 编辑流水线  设置部署环境 关联ECS到部署环境 运行流水线 部署成功  整体课程总结阿里云–云效，企业级一站式DevOps平台，源于阿里巴巴先进的研发理念和工程实践，致力于成为数字企业的研发效能引擎！云效提供从“需求–&gt;开"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105452.png"><meta property="article:published_time" content="2020-09-11T02:28:37.000Z"><meta property="article:modified_time" content="2020-09-22T03:08:12.417Z"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime: '',
+  date_suffix: {"one_hour":"刚刚","hours":"小时前","day":"天前"},
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+      const now = new Date()
+      const expiryDay = ttl * 86400000
+      const item = {
+        value: value,
+        expiry: now.getTime() + expiryDay,
+      }
+      localStorage.setItem(key, JSON.stringify(item))
+    },
+  
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-09-22 11:08:12'
+}</script><noscript><style type="text/css">
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+  }
+}
+
+var autoChangeMode = 'false'
+var t = saveToLocal.get('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (saveToLocal.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/StaticFile_Hexo-master/butterfly/css/pool.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/StaticFile_Hexo-master/butterfly/css/iconfont.min.css"><meta name="generator" content="Hexo 5.1.1"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">15</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">16</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%91%E6%95%88%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">云效流水线简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%91%E6%95%88%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">云效简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%91%E6%95%88%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="toc-number">1.2.</span> <span class="toc-text">云效流水线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%91%E6%95%88%E9%83%A8%E7%BD%B2%E8%83%BD%E5%8A%9B%E6%A6%82%E8%BF%B0"><span class="toc-number">1.3.</span> <span class="toc-text">云效部署能力概述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%91%E6%95%88%E6%B5%81%E7%BA%BF%E5%9E%8B%E5%AE%9E%E6%93%8D"><span class="toc-number">2.</span> <span class="toc-text">云效流线型实操</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E6%9D%A1%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="toc-number">2.1.</span> <span class="toc-text">创建一条流水线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%A8%A1%E6%9D%BF"><span class="toc-number">2.2.</span> <span class="toc-text">选择模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93"><span class="toc-number">2.3.</span> <span class="toc-text">指定代码仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%BB%A3%E7%A0%81%E5%BA%93"><span class="toc-number">2.4.</span> <span class="toc-text">新建代码库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E9%80%9A%E4%BA%91%E6%95%88%E4%BB%A3%E7%A0%81%E6%89%98%E7%AE%A1%E5%8A%9F%E8%83%BD"><span class="toc-number">2.5.</span> <span class="toc-text">开通云效代码托管功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="toc-number">2.6.</span> <span class="toc-text">创建流水线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BF%E7%8A%B6%E6%80%81%E9%A1%B5"><span class="toc-number">2.7.</span> <span class="toc-text">流水线状态页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="toc-number">2.8.</span> <span class="toc-text">编辑流水线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83"><span class="toc-number">2.9.</span> <span class="toc-text">设置部署环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E8%81%94ECS%E5%88%B0%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83"><span class="toc-number">2.10.</span> <span class="toc-text">关联ECS到部署环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="toc-number">2.11.</span> <span class="toc-text">运行流水线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E6%88%90%E5%8A%9F"><span class="toc-number">2.12.</span> <span class="toc-text">部署成功</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">整体课程总结</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105439.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">李瑞的个人博客</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">阿里云DevOps之云效持续交付流水线</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-09-11T02:28:37.000Z" title="发表于 2020-09-11 10:28:37">2020-09-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-09-22T03:08:12.417Z" title="更新于 2020-09-22 11:08:12">2020-09-22</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="云效流水线简介"><a href="#云效流水线简介" class="headerlink" title="云效流水线简介"></a>云效流水线简介</h2><h3 id="云效简介"><a href="#云效简介" class="headerlink" title="云效简介"></a>云效简介</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911103025808.png" alt="image-20200911103025808.png"></p>
+<h3 id="云效流水线"><a href="#云效流水线" class="headerlink" title="云效流水线"></a>云效流水线</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911103146135.png" alt="image-20200911103146135.png"></p>
+<h3 id="云效部署能力概述"><a href="#云效部署能力概述" class="headerlink" title="云效部署能力概述"></a>云效部署能力概述</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911103306390.png" alt="image-20200911103306390.png"></p>
+<h2 id="云效流线型实操"><a href="#云效流线型实操" class="headerlink" title="云效流线型实操"></a>云效流线型实操</h2><h3 id="创建一条流水线"><a href="#创建一条流水线" class="headerlink" title="创建一条流水线"></a>创建一条流水线</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911103441745.png" alt="image-20200911103441745.png"></p>
+<h3 id="选择模板"><a href="#选择模板" class="headerlink" title="选择模板"></a>选择模板</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911103521810.png" alt="image-20200911103521810.png"></p>
+<h3 id="指定代码仓库"><a href="#指定代码仓库" class="headerlink" title="指定代码仓库"></a>指定代码仓库</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911103630294.png" alt="image-20200911103630294.png"></p>
+<h3 id="新建代码库"><a href="#新建代码库" class="headerlink" title="新建代码库"></a>新建代码库</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911103719845.png" alt="image-20200911103719845.png"></p>
+<h3 id="开通云效代码托管功能"><a href="#开通云效代码托管功能" class="headerlink" title="开通云效代码托管功能"></a>开通云效代码托管功能</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911103814495.png" alt="image-20200911103814495.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911103909069.png" alt="image-20200911103909069.png"></p>
+<h3 id="创建流水线"><a href="#创建流水线" class="headerlink" title="创建流水线"></a>创建流水线</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911103955814.png" alt="image-20200911103955814.png"></p>
+<h3 id="流水线状态页"><a href="#流水线状态页" class="headerlink" title="流水线状态页"></a>流水线状态页</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911104046811.png" alt="image-20200911104046811.png"></p>
+<h3 id="编辑流水线"><a href="#编辑流水线" class="headerlink" title="编辑流水线"></a>编辑流水线</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911104134334.png" alt="image-20200911104134334.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911104221064.png" alt="image-20200911104221064.png"></p>
+<h3 id="设置部署环境"><a href="#设置部署环境" class="headerlink" title="设置部署环境"></a>设置部署环境</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911104309952.png" alt="image-20200911104309952.png"></p>
+<h3 id="关联ECS到部署环境"><a href="#关联ECS到部署环境" class="headerlink" title="关联ECS到部署环境"></a>关联ECS到部署环境</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911104401630.png" alt="image-20200911104401630.png"></p>
+<h3 id="运行流水线"><a href="#运行流水线" class="headerlink" title="运行流水线"></a>运行流水线</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911104631154.png" alt="image-20200911104631154.png"></p>
+<h3 id="部署成功"><a href="#部署成功" class="headerlink" title="部署成功"></a>部署成功</h3><p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911104749193.png" alt="image-20200911104749193.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911104841910.png" alt="image-20200911104841910.png"></p>
+<h2 id="整体课程总结"><a href="#整体课程总结" class="headerlink" title="整体课程总结"></a>整体课程总结</h2><p><strong>阿里云–云效</strong>，企业级一站式DevOps平台，源于阿里巴巴先进的研发理念和工程实践，致力于成为数字企业的研发效能引擎！云效提供从“需求–&gt;开发–&gt;测试–&gt;发布–&gt;运维–&gt;运营”端到端的协同服务和研发工具，支持公有云、专有云和混合云多种部署形态，通过人工智能、自动化技术的应用提升开发者的研发效能，持续交付有效价值。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/image-20200911105207587.png" alt="image-20200911105207587.png"></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://lirui-1997.github.io/">李瑞</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://lirui-1997.github.io/2020/09/11/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/">https://lirui-1997.github.io/2020/09/11/%E4%BA%91%E6%95%88%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98%E6%B5%81%E6%B0%B4%E7%BA%BF/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用  <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 </a> 许可协议。转载请注明出处！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/DevOps/">DevOps</a><a class="post-meta__tags" href="/tags/CI-CD/">CI/CD</a><a class="post-meta__tags" href="/tags/%E4%BA%91%E6%95%88/">云效</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105452.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/09/11/%E6%88%91%E7%9A%84DevOps%E6%88%90%E9%95%BF%E6%97%A5%E8%AE%B0%E4%B9%8B%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/"><img class="prev-cover" src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105439.pngg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">我的DevOps成长日记之学习路线</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/11/%E4%BA%91%E5%8E%9F%E7%94%9F%E5%92%8CDevOps/"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105452.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">阿里云DevOps之云原生和DevOps</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/09/11/云原生和DevOps/" title="阿里云DevOps之云原生和DevOps"><img class="cover" src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105452.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-11</div><div class="title">阿里云DevOps之云原生和DevOps</div></div></a></div><div><a href="/2020/09/01/云效敏捷项目管理/" title="阿里云DevOps之云效敏捷项目管理"><img class="cover" src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105452.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-01</div><div class="title">阿里云DevOps之云效敏捷项目管理</div></div></a></div><div><a href="/2020/09/07/云效软件测试和质量保证/" title="阿里云DevOps之云效软件测试和质量保证"><img class="cover" src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105452.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-07</div><div class="title">阿里云DevOps之云效软件测试和质量保证</div></div></a></div><div><a href="/2020/09/02/云效需求管理与迭代规划/" title="阿里云DevOps之云效需求管理与迭代规划"><img class="cover" src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105452.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-02</div><div class="title">阿里云DevOps之云效需求管理与迭代规划</div></div></a></div><div><a href="/2020/09/16/Git的使用/" title="DevOps日记之Git的使用"><img class="cover" src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105425.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-16</div><div class="title">DevOps日记之Git的使用</div></div></a></div><div><a href="/2020/09/11/我的DevOps成长日记之学习路线/" title="我的DevOps成长日记之学习路线"><img class="cover" src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105439.pngg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-11</div><div class="title">我的DevOps成长日记之学习路线</div></div></a></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By 李瑞</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/StaticFile_Hexo-master/butterfly/js/pool.min.js"></script><canvas class="fireworks"></canvas><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="/js/third-party/fireworks.js"></script></div></body></html>
