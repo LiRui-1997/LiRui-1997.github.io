@@ -4,8 +4,8 @@ date: 2020-09-16 09:31:38
 tags:
 - DevOps
 - Git
-top_img: https://wx1.sbimg.cn/2020/09/11/9YETo.png
-cover: https://wx1.sbimg.cn/2020/09/11/9YETo.png
+top_img: https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105439.png
+cover: https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105425.png
 copyright_author: 李瑞
 copyright_author_href: https://lirui-1997.github.io/
 copyright_info: 本博客所有文章除特别声明外，均采用  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 </a> 许可协议。转载请注明出处！

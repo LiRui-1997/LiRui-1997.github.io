@@ -3,8 +3,8 @@ title: 阿里云课程之API请求与认证
 date: 2020-09-15 09:20:37
 tags:
 - API
-top_img: https://wx1.sbimg.cn/2020/09/15/9VYb6.png
-cover: https://wx1.sbimg.cn/2020/09/15/9VYb6.png
+top_img: https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105439.png
+cover: https://cdn.jsdelivr.net/gh/LiRui-1997/hexo/image/封面/微信图片_20200922105434.png
 copyright_author: 李瑞
 copyright_author_href: https://lirui-1997.github.io/
 copyright_info: 本博客所有文章除特别声明外，均采用  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 </a> 许可协议。转载请注明出处！
